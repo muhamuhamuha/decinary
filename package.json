@@ -1,10 +1,12 @@
 {
   "name": "decinary",
   "version": "1.0.0",
-  "description": "basic web ui for converting decimal numbers to binary and vice versa",
-  "main": "app.ts",
+  "description": "ui and functions to transform 8-bit binary string to decimal and back",
+  "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "npm run lite",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lite": "lite-server"
   },
   "repository": {
     "type": "git",
@@ -13,12 +15,10 @@
   "author": "muhamuhamuha",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/muhamuhamuha/decinary/.git"
+    "url": "https://github.com/muhamuhamuha/decinary/issues"
   },
   "homepage": "https://github.com/muhamuhamuha/decinary#readme",
-  "devDependencies": {
-    "live-server": "^1.2.1",
-    "tslint": "^6.1.3",
-    "typescript": "^4.1.5"
+  "dependencies": {
+    "lite-server": "^2.6.1"
   }
 }
