@@ -5,6 +5,7 @@ const mainput = document.querySelector('.mainput');
 const binput = document.querySelector('#binput');
 const decinput = document.querySelector('#deciput')
 
+function bringInput(evt) { mainput.setAttribute('type', 'text') }
 
 mainform.addEventListener('submit', (evt) => {
   evt.preventDefault();
@@ -12,16 +13,20 @@ mainform.addEventListener('submit', (evt) => {
 }); 
 
 
+binput.addEventListener('change', bringInput)
+decinput.addEventListener('change', bringInput)
+
 mainput.addEventListener('input', function (evt) {
   const notBin = /[^0-1]/;
   
   if (!binput.checked && !decinput.checked) {
     console.log('Please check one of the two buttons.')
-    mainput.setAttribute('maxlength', '0')
+    mainput.setAttribute('type', 'hidden');
   }
 
-  else if (decinput.checked) {
-    neg = this.value.toString()[0] === '-' ? '4' : '3'
+  if (decinput.checked) {
+    const neg = this.value.toString()[0] === '-' ? '4' : '3'
+    console.log(neg)
     mainput.setAttribute('maxlength', neg);
 
     const num = this.value
@@ -32,7 +37,6 @@ mainput.addEventListener('input', function (evt) {
     // console.log(`${isNaN(this.value)} value isNaN`)
 
   } else {
-
     mainput.setAttribute('maxlength', '8');
 
     const binary = this.value;
@@ -78,3 +82,4 @@ const deci2bin = function(num) {
 
   return bits.join('')
 }
+
