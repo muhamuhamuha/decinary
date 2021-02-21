@@ -1,20 +1,23 @@
-import * as bins from "./binutils.js";
+import * as bin from "./binutils.js";
+import * as dec from './decutils.js';
 
 const mainform = document.querySelector('#mainform');
-const mainput = document.querySelector('.mainput');
+const mainput = document.querySelector('#mainput');
 const binput = document.querySelector('#binput');
 const decinput = document.querySelector('#deciput')
 
-function bringInput(evt) { mainput.setAttribute('type', 'text') }
+function bringInput(evt) {
+  mainput.setAttribute('type', 'text')
+  mainput.value = '';
+}
 
 mainform.addEventListener('submit', (evt) => {
   evt.preventDefault();
   return false;
 }); 
 
-
-binput.addEventListener('change', bringInput)
-decinput.addEventListener('change', bringInput)
+binput.addEventListener('change', bringInput);
+decinput.addEventListener('change', bringInput);
 
 mainput.addEventListener('input', function (evt) {
   const notBin = /[^0-1]/;
@@ -22,17 +25,17 @@ mainput.addEventListener('input', function (evt) {
   if (!binput.checked && !decinput.checked) {
     console.log('Please check one of the two buttons.')
     mainput.setAttribute('type', 'hidden');
+    // mainform.insertAfter
   }
 
   if (decinput.checked) {
-    const neg = this.value.toString()[0] === '-' ? '4' : '3'
-    console.log(neg)
-    mainput.setAttribute('maxlength', neg);
-
     const num = this.value
 
-    const d2b = deci2bin(num)
-    console.log(d2b)
+    const neg = num.toString()[0] === '-' ? '4' : '3'
+    mainput.setAttribute('maxlength', neg);
+
+    const d2b = deci.toBin(num)
+    console.log(`d2b -> ${d2b}`)
 
     // console.log(`${isNaN(this.value)} value isNaN`)
 
@@ -40,46 +43,19 @@ mainput.addEventListener('input', function (evt) {
     mainput.setAttribute('maxlength', '8');
 
     const binary = this.value;
+    const evalBin = bin.checkBin(binary);
 
-    const evalBin = bins.evaluateBinary(binary);
-
-    const b2d = bins.bin2deci(evalBin)
-    const smr = bins.bin2smr(evalBin)
-    const b1c = bins.bin1comp(evalBin)
+    const b2d = bin.toDeci(evalBin)
+    const smr = bin.toSMR(evalBin)
+    const b1c = bin.to1Comp(evalBin)
+    const e32 = bin.toExcess32(evalBin)
+    const b2c = bin.to2Comp(b1c)
 
     console.log(`b2d -> ${b2d}`)
     console.log(`SMR -> ${smr}`)
     console.log(`b1c -> ${b1c}`)
+    console.log(`e32 -> ${e32}`)
+    console.log('~~~~~')
+
   }
 })
-
-
-const deci2bin = function(num) {
-  const bits = [];
-  let givenNum = num;
-
-  while (givenNum > 0) {
-    if (givenNum % 2 === 1) 
-      bits.unshift('1');
-    else
-      bits.unshift('0');
-
-    givenNum = Math.floor(givenNum / 2);
-
-  }
-
-  if (bits.length !== 8) {
-    const len = bits.length > 0 ? 8 - bits.length : 8
-    console.log(`bits len -> ${bits.length}`)
-    console.log(`len ${len}`)
-    return (
-      [...Array(len).keys()]
-        .map( i => '0' )
-        .concat([...bits])
-        .join('')
-    )
-  }
-
-  return bits.join('')
-}
-

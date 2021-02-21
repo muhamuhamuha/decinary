@@ -1,7 +1,7 @@
 export const summer = (sumVal, value) => sumVal + value
 
 
-export const evaluateBinary = function(binary) {
+export const checkBin = function(binary) {
 
   const binaryPlaces = (
     [...Array(8).keys()]
@@ -29,12 +29,12 @@ export const evaluateBinary = function(binary) {
 }
 
 
-export const bin2deci = (evalBin) => {
+export const toDeci = (evalBin) => {
   return [...evalBin].reduce(summer)
 }
 
 
-export const bin2smr = (evalBin) => {
+export const toSMR = (evalBin) => {
   if (evalBin[0] !== 0)
     return (
       [...evalBin]
@@ -42,11 +42,11 @@ export const bin2smr = (evalBin) => {
         .reduce(summer) * -1
     )
 
-  return bin2deci(evalBin)
+  return toDeci(evalBin)
 }
 
 
-export const bin1comp = (evalBin) => {
+export const to1Comp = (evalBin) => {
   return (
     [...evalBin]
       .map(bit => bit === 0 ? 1 : 0)
@@ -55,6 +55,15 @@ export const bin1comp = (evalBin) => {
 }
 
 
-export const bin2comp = (evalBin) => {
-  console.log('hello')
+export const toExcess32 = evalBin => {
+  return (
+    [...evalBin]
+      .slice(2)
+      .reduce(summer) - 32
+  )
+}
+
+
+export const to2Comp = (oneComp) => {
+  
 }
