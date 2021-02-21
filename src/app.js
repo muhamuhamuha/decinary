@@ -1,3 +1,5 @@
+import * as bins from "./binutils.js";
+
 const mainform = document.querySelector('#mainform');
 const mainput = document.querySelector('.mainput');
 const binput = document.querySelector('#binput');
@@ -15,69 +17,64 @@ mainput.addEventListener('input', function (evt) {
   
   if (!binput.checked && !decinput.checked) {
     console.log('Please check one of the two buttons.')
+    mainput.setAttribute('maxlength', '0')
   }
 
-  if (this.value.match(notBin)) {
+  else if (decinput.checked) {
+    neg = this.value.toString()[0] === '-' ? '4' : '3'
+    mainput.setAttribute('maxlength', neg);
 
-    console.log('not bin')
-    console.log(`${isNaN(this.value)} value isNaN`)
+    const num = this.value
+
+    const d2b = deci2bin(num)
+    console.log(d2b)
+
+    // console.log(`${isNaN(this.value)} value isNaN`)
+
   } else {
-    // it's a binary pattern!
 
-    console.log('bin')
-    binary = this.value
-    b2d = binaryToDecimal(binary)
-    console.log(b2d)
-    // smr = binarySMR(binary)
+    mainput.setAttribute('maxlength', '8');
+
+    const binary = this.value;
+
+    const evalBin = bins.evaluateBinary(binary);
+
+    const b2d = bins.bin2deci(evalBin)
+    const smr = bins.bin2smr(evalBin)
+    const b1c = bins.bin1comp(evalBin)
+
+    console.log(`b2d -> ${b2d}`)
+    console.log(`SMR -> ${smr}`)
+    console.log(`b1c -> ${b1c}`)
   }
 })
 
-const summer = (sumVal, value) => sumVal + value
 
-function binarySMR(binary) {
+const deci2bin = function(num) {
+  const bits = [];
+  let givenNum = num;
 
-  const smrArr = (
-    [...binary]
-      .map((bit, i) => ([i, parseInt(bit)]))
-      // .reverse()
-  )
-  console.log(smrArr)
+  while (givenNum > 0) {
+    if (givenNum % 2 === 1) 
+      bits.unshift('1');
+    else
+      bits.unshift('0');
 
-  const lead = smrArr.pop()
-  const smrBits = smrArr.map(
-    bitArr => (2 ** (bitArr[0] - 1)) * bitArr[1]
-  )
+    givenNum = Math.floor(givenNum / 2);
 
-  // console.log(smrBits)
-  const MSB = lead[1] === 1 ? -1 : 0
-
-  // console.log([MSB, ...smrBits])
-}
-
-
-function binaryToDecimal(binary) {
-
-  const binaryPlaces = (
-    [...Array(8).keys()]
-      .map(i => 2 ** i)
-      .reverse()
-  )
-
-  if (binary.length !== 8) {
-    binary = (
-      [...Array(8 - binary.length).keys()]
-        .map(i => '0')
-        .concat([...binary])
-        .join('')
-    )
-    
   }
 
-  return (
-    [...binary]
-      // zip two arrays together
-      .map((bit, i) => ([binaryPlaces[i], parseInt(bit)]))
-      .map((arr => arr[0] * arr[1]))  // multiply with zipped index
-      .reduce(summer)  // sum it all up
-  )
+  if (bits.length !== 8) {
+    const len = bits.length > 0 ? 8 - bits.length : 8
+    console.log(`bits len -> ${bits.length}`)
+    console.log(`len ${len}`)
+    return (
+      [...Array(len).keys()]
+        .map( i => '0' )
+        .concat([...bits])
+        .join('')
+    )
+  }
+
+  return bits.join('')
 }
