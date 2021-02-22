@@ -67,3 +67,25 @@ export const toExcess32 = evalBin => {
 export const to2Comp = (oneComp) => {
   
 }
+
+const addBins = function(b1, b2) {
+
+  let res = ''  // init the result
+  let carry = 0
+
+  for(let i = 7; i >= 0; i--) {
+    let temp = carry
+
+    temp += b1[i] === '1' ? 1 : 0
+    temp += b2[i] === '1' ? 1 : 0
+
+    res = (temp % 2 === 1 ? '1' : '0') + res
+    carry = temp < 2 ? 0 : 1
+  }
+
+  if (carry !== 0)
+    res = '1' + res
+
+  return res
+
+}
