@@ -1,0 +1,41 @@
+main {
+    display: grid;
+    grid-template-columns: repeat(3, auto);
+    grid-template-rows: repeat(3, 200px);
+    align-items: center;
+    justify-content: center;
+}
+
+.hidden {
+    display: none;
+    visibility: hidden;
+}
+
+main section[class="main"] {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+}
+
+main section[id="output"] {
+    grid-column: 2 / 3;
+    grid-row: 3 / 3;
+}
+
+#mainform div {
+    display: flex;
+    justify-content: center;
+}
+
+#mainput {
+    text-align: center;
+    width: 250px;
+}
+
+#decinput {
+    padding-left: 13px;
+}
+
+#output p {
+    display: flex;
+    justify-content: center;
+}

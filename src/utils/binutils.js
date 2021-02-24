@@ -1,7 +1,6 @@
-export const summer = (sumVal, value) => sumVal + value
+import { summer } from './utils.js';
 
-
-export const checkBin = function(binary) {
+export const check = function(binary) {
 
   const binaryPlaces = (
     [...Array(8).keys()]
@@ -55,22 +54,23 @@ export const to1Comp = (evalBin) => {
 }
 
 
-export const toExcess32 = evalBin => {
+export const toExcess128 = evalBin => {
   return (
     [...evalBin]
       .slice(2)
-      .reduce(summer) - 32
+      .reduce(summer) - 128
   )
 }
 
 
 export const to2Comp = (oneComp) => {
-  
+  return add(oneComp, '00000001')
 }
 
-const addBins = function(b1, b2) {
 
-  let res = ''  // init the result
+export const add = function(b1, b2) {
+
+  let res = ''
   let carry = 0
 
   for(let i = 7; i >= 0; i--) {

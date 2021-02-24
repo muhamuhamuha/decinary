@@ -1,61 +1,67 @@
-import * as bin from "./binutils.js";
-import * as dec from './decutils.js';
+import * as bin from "./utils/binutils.js";
+import * as dec from './utils/decutils.js';
+import {
+  hideByID,
+  unhideByID,
+  resetOutputs,
+  addOutputs,
+}  from './utils/utils.js';
 
 const mainform = document.querySelector('#mainform');
 const mainput = document.querySelector('#mainput');
 const binput = document.querySelector('#binput');
-const decinput = document.querySelector('#deciput')
+const decinput = document.querySelector('#deciput');
+const conv = document.querySelector('#conv');
+
+hideByID('mainput');
+hideByID('invalid');
+resetOutputs();
 
 function bringInput(evt) {
-  mainput.setAttribute('type', 'text')
-  mainput.value = '';
+  resetOutputs();
+  mainput.classList.remove('hidden');
+  mainput.value = null;
 }
+
+binput.addEventListener('input', bringInput);
+decinput.addEventListener('input', bringInput);
+
+mainput.addEventListener('input', function (evt) {
+  
+  const val = this.value
+  if (isNaN(val) || (val.match(/[^0-1]/) && binput.checked)) {
+    unhideByID('invalid');
+  } else {
+    hideByID('invalid');
+  }
+  
+  let binArr
+  try {
+    binArr = decinput.checked ? dec.toBinArr(val) : bin.check(val)
+  } catch (RangeError) {
+    hideByID('invalid');
+    unhideByID('invalid');
+    bringInput();
+  }
+
+  if (decinput.checked) {
+    const neg = val.toString()[0] === '-' ? '4' : '3'
+    mainput.setAttribute('maxlength', neg);
+
+  } 
+    
+  else if (binput.checked) { mainput.setAttribute('maxlength', '8'); }
+
+  const conVal = decinput.checked ? dec.toBinary(val) : bin.toDeci(binArr)
+  const smr = bin.toSMR(binArr)
+  const b1c = bin.to1Comp(binArr)
+  const b2c = bin.to2Comp(b1c)
+  const e128 = bin.toExcess128(binArr)
+
+  addOutputs([conVal, smr, b1c, b2c, e128]);
+})
 
 mainform.addEventListener('submit', (evt) => {
   evt.preventDefault();
   return false;
 }); 
-
-binput.addEventListener('change', bringInput);
-decinput.addEventListener('change', bringInput);
-
-mainput.addEventListener('input', function (evt) {
-  const notBin = /[^0-1]/;
-  
-  if (!binput.checked && !decinput.checked) {
-    console.log('Please check one of the two buttons.')
-    mainput.setAttribute('type', 'hidden');
-    // mainform.insertAfter
-  }
-
-  if (decinput.checked) {
-    const num = this.value
-
-    const neg = num.toString()[0] === '-' ? '4' : '3'
-    mainput.setAttribute('maxlength', neg);
-
-    const d2b = deci.toBin(num)
-    console.log(`d2b -> ${d2b}`)
-
-    // console.log(`${isNaN(this.value)} value isNaN`)
-
-  } else {
-    mainput.setAttribute('maxlength', '8');
-
-    const binary = this.value;
-    const evalBin = bin.checkBin(binary);
-
-    const b2d = bin.toDeci(evalBin)
-    const smr = bin.toSMR(evalBin)
-    const b1c = bin.to1Comp(evalBin)
-    const e32 = bin.toExcess32(evalBin)
-    const b2c = bin.to2Comp(b1c)
-
-    console.log(`b2d -> ${b2d}`)
-    console.log(`SMR -> ${smr}`)
-    console.log(`b1c -> ${b1c}`)
-    console.log(`e32 -> ${e32}`)
-    console.log('~~~~~')
-
-  }
-})

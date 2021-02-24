@@ -4,25 +4,42 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Decinary</title>
+
+  <link rel="stylesheet" href="app.css">
 </head>
 <body>
+  <main>
 
-  <form action="" class="main" id="mainform">
-    <label for="mainput"></label>
-    <input type="text" name="mainput" id="mainput">
+    <section class="main">
+      <form action="" id="mainform" autocomplete="off">
 
-    <div>
-      <label for="binput">Binary</label>
-      <input type="radio" name="binimal" id="binput">
+        <div>
+          <label for="binput">Binary</label>
+          <input type="radio" name="binimal" id="binput">
 
-      <label for="deciput">Decimal</label>
-      <input type="radio" name="binimal" id="deciput">
-    </div>
+          <label for="deciput">Decimal</label>
+          <input type="radio" name="binimal" id="deciput">
+        </div>
 
+        <label for="mainput"></label>
+        <input type="text" name="mainput" id="mainput">
 
-  </form>
+        <div>
+          <p id="invalid">Uh-oh, you've entered something invalid...</p>
+        </div>
+      </form>
 
-  
+    </section>
+
+    <section id="output">
+      <p class="pout" id="conv"></p>
+      <p class="pout"></p>
+      <p class="pout"></p>
+      <p class="pout"></p>
+      <p class="pout"></p>
+    </section>
+
+  </main>
   <script type="module" src="app.js"></script>
 </body>
 </html>
