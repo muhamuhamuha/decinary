@@ -11,6 +11,9 @@ main {
     visibility: hidden;
 }
 
+.red {
+    color: red;
+}
 main section[class="main"] {
     grid-column: 2 / 3;
     grid-row: 2 / 3;

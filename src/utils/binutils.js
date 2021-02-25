@@ -28,11 +28,22 @@ export const check = function(binary) {
 }
 
 
+/** 
+ * sums up the given array to return the decimal value
+ * @param {Array} evalBin - an array where binary ones and zeros were mapped
+ * and multiplied to their corresponding power of two
+ */
 export const toDeci = (evalBin) => {
   return [...evalBin].reduce(summer)
 }
 
 
+/** 
+ * converts the given array to a decimal value * -1 if the first part
+ * of the array is non-zero
+ * @param {Array} evalBin - an array where binary ones and zeros were mapped
+ * and multiplied to their corresponding power of two
+ */
 export const toSMR = (evalBin) => {
   if (evalBin[0] !== 0)
     return (
@@ -45,26 +56,43 @@ export const toSMR = (evalBin) => {
 }
 
 
+/** 
+ * converts the given array to a decimal value * -1 if the first part
+ * of the array is non-zero
+ * @param {Array} evalBin - an array where binary ones and zeros were mapped
+ * and multiplied to their corresponding power of two
+ */
 export const to1Comp = (evalBin) => {
   return (
-    [...evalBin]
-      .map(bit => bit === 0 ? 1 : 0)
+      [...evalBin]
+        .map( bit => bit === 0 ? 1 : 0)
+        .join('')
+    )
+}
+
+
+export const to2Comp = (oneComp) => {
+  // get back to the original binary
+  const evalBin = check(
+    [...oneComp]
+      .map( bit => bit === '0'? '1' : '0')
       .join('')
   )
+
+  const decimal = toDeci(evalBin)
+  if (decimal > 127 || decimal < -128)
+    return 'overflow, cannot represent with 8 bits'
+  
+  return add(oneComp, '00000001')
 }
 
 
 export const toExcess128 = evalBin => {
   return (
     [...evalBin]
-      .slice(2)
+      .slice(1)  // ignores first number in array
       .reduce(summer) - 128
   )
-}
-
-
-export const to2Comp = (oneComp) => {
-  return add(oneComp, '00000001')
 }
 
 

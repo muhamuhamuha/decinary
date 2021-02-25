@@ -6,7 +6,7 @@ A UI and javascript utilities for converting 8-bit binary strings to decimal and
 ## Installation
 Honestly, if the installation steps below seem too much of a hassle, I can run the program on my machine and you can take control and play around with it. I hope it's not too much of a hassle.
 
-### A. More Steps but Lighter-Weight/Quicker Installations, with Git and VSCode
+### A. More Steps, but Lighter-Weight/Quicker Installations, with Git and VSCode
 1. The source files can be cloned directly onto your computer with git, instead of downloading and unzipping manually
 2. Make sure you have both git and VSCode on your machine [git download link](https://git-scm.com/downloads) and [VSCode download link](https://code.visualstudio.com/download)
 3. Open a terminal and cd into your desired directory
@@ -18,14 +18,14 @@ Honestly, if the installation steps below seem too much of a hassle, I can run t
     * Hit Ctrl/CMD-Shift-P and type "install extensions" and hit Enter
     * Alternatively, select the extension menu from the side bar (see image link below)
     * [live-server installation guide](./images/install-live-server.png)
-7. Once installed, open the file 'decinary/src/index.html' and click on the Go Live icon on the footer bar (see image link below)
+7. Once installed, open the file ['.decinary/src/index.html'](./src/index.html) and click on the "Go Live" icon on the footer bar (see image link below)
     * [starting up live server guide](./images/fire-live-server.png)
 8. If the URL opens to "localhost:{some port number}" but you don't see anything, append this to the URL: `/src/index.html` so that the full URL reads "localhost:{some port number}/src/index.html"
 9. **NOTE**: please paste the above URL into Firefox or Chrome or another modern browser, the UI may not render properly in Safari and I'm sure it won't work at all in Internet Explorer
 
 <br>
 
-### B. Less Steps but Requires Heavier Installations, with Node.js
+### B. Less Steps, but Requires Heavier Installations, with Node.js
 1. Download Node.js LTS with the Node Package Manager: [click here](https://nodejs.org/en/download/)
 or go to https://nodejs.org/en/download/
 2. Unzip the source directory or clone with git by firing up a terminal and typing:
@@ -41,7 +41,7 @@ or go to https://nodejs.org/en/download/
 <br>
 
 ## Usage
-Once you've fired up the UI, you must select one of the two radio buttons that are displayed. Select "Binary" if you wish to input a binary string. The input field will accept only an 8-bit binary string. Selecting decimal will allow you to input any number between -127 and 255. Error messages appear if you try to give any input other than this. Once an error is thrown, your input will be reset and you'll have to start over.
+Once you've fired up the UI, you must select one of the two radio buttons that are displayed. Select "Binary" if you wish to input a binary string. The input field will accept only an 8-bit binary string. **NOTE** if a binary string is given and is not 8-bits, it will be turned into an 8-bit string by pushing 0s to the front of the string. Selecting decimal will allow you to input any number between -127 and 255. Error messages appear if you try to give any input other than this. Once an error is thrown, your input will be reset and you'll have to start over.
 
 <br>
 
